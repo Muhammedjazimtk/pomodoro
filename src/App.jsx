@@ -1,6 +1,8 @@
 import "./App.css";
 import { useState } from "react";
 function App() {
+  const [breakTimeSrting, setBreak] = useState("5:00");
+  const [sessionTimeString, setSession] = useState("25:00");
   const [breakTime, setBreakTime] = useState(5);
   const [sessionTime, setSessionTime] = useState(25);
   const [bOrs, setbOrs] = useState(true);
@@ -20,8 +22,8 @@ function App() {
   function handleStart() {
     let seconds = 59;
     setInterval(function hello() {
-      let s = breakTime - 1 + ":" + seconds;
-      console.log(s);
+      setBreak(breakTime - 1 + ":" + seconds);
+      console.log(breakTimeSrting);
       if (seconds > 0) {
         seconds -= 1;
       } else {
@@ -114,14 +116,14 @@ function App() {
 
         {bOrs ? (
           <div className="flex justify-center items-center flex-col gap-1 h-72 w-72 border-4 rounded-[100%] border-green-500  ">
-            <p className="text-yellow-50 text-5xl">{sessionTime}</p>
+            <p className="text-yellow-50 text-5xl">{sessionTimeString}</p>
             <button className="text-yellow-50" onClick={handleStart}>
               Click to Start
             </button>
           </div>
         ) : (
           <div className="flex justify-center items-center flex-col gap-1 h-72 w-72 border-4 rounded-[100%] bg-green-500 border-green-500  ">
-            <p className="text-yellow-50 text-5xl">{breakTime}</p>
+            <p className="text-yellow-50 text-5xl">{breakTimeSrting}</p>
             <button className="text-yellow-50" onClick={handleStart}>
               Click to Start
             </button>
