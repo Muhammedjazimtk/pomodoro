@@ -6,7 +6,6 @@ function App() {
   const [breakTime, setBreakTime] = useState(5);
   const [sessionTime, setSessionTime] = useState(25);
   const [bOrs, setbOrs] = useState(true);
-  let seconds = 59;
 
   function handleBreakTime(e) {
     if (e.target.id == "sub") {
