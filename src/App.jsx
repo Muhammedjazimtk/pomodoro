@@ -6,42 +6,39 @@ function App() {
   const [breakTime, setBreakTime] = useState(5);
   const [sessionTime, setSessionTime] = useState(25);
   const [bOrs, setbOrs] = useState(true);
+  let seconds = 59;
 
   function handleBreakTime(e) {
     if (e.target.id == "sub") {
       if (breakTime > 1) {
         setBreakTime(breakTime - 1);
+        setBreak(breakTime - 1 + ":00");
       } else {
         setBreakTime(1);
       }
     } else {
       setBreakTime(breakTime + 1);
+      setBreak(breakTime + 1 + ":00");
     }
   }
 
   function handleStart() {
-    let seconds = 59;
-    setInterval(function hello() {
-      setBreak(breakTime - 1 + ":" + seconds);
-      console.log(breakTimeSrting);
-      if (seconds > 0) {
-        seconds -= 1;
-      } else {
-        seconds = 0;
-        setBreakTime(breakTime - 1);
-      }
-    }, 1000);
+    setBreak(breakTime - 1 + ":" + seconds);
+    seconds -= 1;
+    setTimeout(handleStart, 1000);
   }
 
   function handleSessionTime(e) {
     if (e.target.id == "sub") {
       if (sessionTime > 1) {
         setSessionTime(sessionTime - 1);
+        setSession(sessionTime - 1 + ":00");
       } else {
         setSessionTime(1);
       }
     } else {
       setSessionTime(sessionTime + 1);
+      setSession(sessionTime + 1 + ":00");
     }
   }
 
@@ -51,7 +48,7 @@ function App() {
 
   return (
     <div className="flex flex-col h-[100vh] w-[100%] justify-center items-center bg-[#2A2C31] gap-4">
-      <h1 className="animate-bounce text-yellow-50 text-3xl font-semibold">
+      <h1 className="animate-pulse text-yellow-50 text-3xl font-semibold">
         Pomodoro Clock
       </h1>
       <div className="flex flex-col w-[350px] h-min gap-2 pt-2  items-center ">
@@ -117,16 +114,18 @@ function App() {
         {bOrs ? (
           <div className="flex justify-center items-center flex-col gap-1 h-72 w-72 border-4 rounded-[100%] border-green-500  ">
             <p className="text-yellow-50 text-5xl">{sessionTimeString}</p>
-            <button className="text-yellow-50" onClick={handleStart}>
-              Click to Start
-            </button>
+            <div className="flex gap-8">
+              <button className="text-yellow-50">Start</button>
+              <button className="text-yellow-50">Stop</button>
+            </div>
           </div>
         ) : (
           <div className="flex justify-center items-center flex-col gap-1 h-72 w-72 border-4 rounded-[100%] bg-green-500 border-green-500  ">
             <p className="text-yellow-50 text-5xl">{breakTimeSrting}</p>
-            <button className="text-yellow-50" onClick={handleStart}>
-              Click to Start
-            </button>
+            <div className="flex gap-8">
+              <button className="text-yellow-50">Start</button>
+              <button className="text-yellow-50">Stop</button>
+            </div>
           </div>
         )}
 
@@ -139,6 +138,9 @@ function App() {
             onClick={() => {
               setBreakTime(5);
               setSessionTime(25);
+              setBreak("5:00");
+              setSession("25:00");
+              setbOrs(true);
             }}
           >
             Reset
