@@ -54,7 +54,7 @@ function App() {
             setSession(sessionTime + ":00");
           }, 1000);
         }
-      }, 5);
+      }, 1000);
     } else {
       let time = breakTime * 60 - 1;
       const interval = setInterval(function hello() {
@@ -72,7 +72,7 @@ function App() {
             setBreak(breakTime + ":00");
           }, 1000);
         }
-      }, 5);
+      }, 1000);
     }
   }
 
