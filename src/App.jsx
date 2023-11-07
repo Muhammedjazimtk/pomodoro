@@ -20,13 +20,6 @@ function App() {
       setBreak(breakTime + 1 + ":00");
     }
   }
-
-  function handleStart() {
-    setBreak(breakTime - 1 + ":" + seconds);
-    seconds -= 1;
-    setTimeout(handleStart, 1000);
-  }
-
   function handleSessionTime(e) {
     if (e.target.id == "sub") {
       if (sessionTime > 1) {
@@ -41,12 +34,50 @@ function App() {
     }
   }
 
-  function handlebors() {
-    setbOrs(!bOrs);
+  function Start() {
+    let audio = document.getElementById("audio");
+    if (bOrs) {
+      let time = sessionTime * 60 - 1;
+      let interval = setInterval(function hello() {
+        let minutes = Math.floor(time / 60);
+        let seconds = time % 60;
+        seconds = seconds < 10 ? "0" + seconds : seconds;
+        minutes = minutes < 1 ? "0" + minutes : minutes;
+
+        setSession(minutes + ":" + seconds);
+
+        time -= 1;
+        if (time < 0) {
+          audio.play();
+          clearInterval(interval);
+          setTimeout(() => {
+            setSession(sessionTime + ":00");
+          }, 1000);
+        }
+      }, 5);
+    } else {
+      let time = breakTime * 60 - 1;
+      const interval = setInterval(function hello() {
+        let minutes = Math.floor(time / 60);
+        let seconds = time % 60;
+        seconds = seconds < 10 ? "0" + seconds : seconds;
+        minutes = minutes < 1 ? "0" + minutes : minutes;
+        setBreak(minutes + ":" + seconds);
+
+        time -= 1;
+        if (time < 0) {
+          clearInterval(interval);
+          audio.play();
+          setTimeout(() => {
+            setBreak(breakTime + ":00");
+          }, 1000);
+        }
+      }, 5);
+    }
   }
 
   return (
-    <div className="flex flex-col h-[100vh] w-[100%] justify-center items-center bg-[#2A2C31] gap-4">
+    <div className="flex flex-col h-screen w-[100%] justify-center items-center bg-[#2A2C31] gap-4">
       <h1 className="animate-pulse text-yellow-50 text-3xl font-semibold">
         Pomodoro Clock
       </h1>
@@ -114,22 +145,32 @@ function App() {
           <div className="flex justify-center items-center flex-col gap-1 h-72 w-72 border-4 rounded-[100%] border-green-500  ">
             <p className="text-yellow-50 text-5xl">{sessionTimeString}</p>
             <div className="flex gap-8">
-              <button className="text-yellow-50">Start</button>
-              <button className="text-yellow-50">Stop</button>
+              <button className="text-yellow-50" onClick={Start}>
+                Click to Start
+              </button>
             </div>
           </div>
         ) : (
           <div className="flex justify-center items-center flex-col gap-1 h-72 w-72 border-4 rounded-[100%] bg-green-500 border-green-500  ">
             <p className="text-yellow-50 text-5xl">{breakTimeSrting}</p>
             <div className="flex gap-8">
-              <button className="text-yellow-50">Start</button>
-              <button className="text-yellow-50">Stop</button>
+              <button className="text-yellow-50" onClick={Start}>
+                Click to Start
+              </button>
+              {/*<button className="text-yellow-50" onClick={breakStop}>
+                Stop
+        </button>*/}
             </div>
           </div>
         )}
 
         <div className="flex w-full items-center justify-between">
-          <button className="text-yellow-50" onClick={handlebors}>
+          <button
+            className="text-yellow-50"
+            onClick={() => {
+              setbOrs(!bOrs);
+            }}
+          >
             Next
           </button>
           <button
@@ -147,6 +188,9 @@ function App() {
         </div>
       </div>
       <p className="text-yellow-50 text-center text-xs">by jazim</p>
+      <audio id="audio">
+        <source src="audio.mp3" type="audio/mpeg"></source>
+      </audio>
     </div>
   );
 }
