@@ -35,6 +35,8 @@ function App() {
   }
 
   function Start() {
+    let btn = document.getElementById("start");
+    btn.disabled = true;
     let audio = document.getElementById("audio");
     if (bOrs) {
       let time = sessionTime * 60 - 1;
@@ -50,9 +52,12 @@ function App() {
         if (time < 0) {
           audio.play();
           clearInterval(interval);
+
           setTimeout(() => {
+            setbOrs(!bOrs);
             setSession(sessionTime + ":00");
-          }, 1000);
+            btn.disabled = false;
+          }, 2000);
         }
       }, 1000);
     } else {
@@ -67,10 +72,13 @@ function App() {
         time -= 1;
         if (time < 0) {
           clearInterval(interval);
+
           audio.play();
           setTimeout(() => {
+            setbOrs(!bOrs);
             setBreak(breakTime + ":00");
-          }, 1000);
+            btn.disabled = false;
+          }, 2000);
         }
       }, 1000);
     }
@@ -145,7 +153,7 @@ function App() {
           <div className="flex justify-center items-center flex-col gap-1 h-72 w-72 border-4 rounded-[100%] border-green-500  ">
             <p className="text-yellow-50 text-5xl">{sessionTimeString}</p>
             <div className="flex gap-8">
-              <button className="text-yellow-50" onClick={Start}>
+              <button id="start" className="text-yellow-50" onClick={Start}>
                 Click to Start
               </button>
             </div>
@@ -154,7 +162,7 @@ function App() {
           <div className="flex justify-center items-center flex-col gap-1 h-72 w-72 border-4 rounded-[100%] bg-green-500 border-green-500  ">
             <p className="text-yellow-50 text-5xl">{breakTimeSrting}</p>
             <div className="flex gap-8">
-              <button className="text-yellow-50" onClick={Start}>
+              <button id="start" className="text-yellow-50" onClick={Start}>
                 Click to Start
               </button>
               {/*<button className="text-yellow-50" onClick={breakStop}>
