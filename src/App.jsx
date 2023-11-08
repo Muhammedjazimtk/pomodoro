@@ -211,7 +211,13 @@ function App() {
           </button>
         </div>
       </div>
-      <p className="text-yellow-50 text-center text-xs">by jazim</p>
+      <a
+        href="https://github.com/Muhammedjazimtk"
+        target="_blank"
+        rel="noreferrer"
+      >
+        <p className="text-yellow-50 text-center text-xs">by jazim</p>
+      </a>
       <audio id="audio">
         <source src="audio.mp3" type="audio/mpeg"></source>
       </audio>
